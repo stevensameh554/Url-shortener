@@ -2,34 +2,49 @@ openapi: 3.1.0
 info:
   title: LinkPulse API
   version: 0.1.0
-  description: REST API contract for LinkPulse URL shortening, authentication, link management, redirects, analytics, dashboard, and account profile workflows.
+  description: REST API contract matching the current LinkPulse Express implementation.
 servers:
   - url: http://localhost:4000
-    description: Local development API
 tags:
   - name: Health
   - name: Authentication
-  - name: Links
-  - name: Redirects
-  - name: Analytics
-  - name: Dashboard
   - name: Profile
+  - name: Links
+  - name: Analytics
+  - name: Redirects
 paths:
-  /health:
+  /api/health:
     get:
       tags: [Health]
-      summary: Check application health
+      summary: Check API process health
       responses:
         "200":
-          description: Application is healthy
+          description: API is alive
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthResponse"
+  /api/ready:
+    get:
+      tags: [Health]
+      summary: Check API dependency readiness
+      responses:
+        "200":
+          description: Dependencies are ready
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadinessResponse"
+        "503":
+          description: One or more dependencies are degraded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadinessResponse"
   /api/auth/register:
     post:
       tags: [Authentication]
-      summary: Register a new user
+      summary: Register a user
       requestBody:
         required: true
         content:
@@ -38,11 +53,11 @@ paths:
               $ref: "#/components/schemas/RegisterRequest"
       responses:
         "201":
-          description: User registered
+          description: Registered
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponse"
+                $ref: "#/components/schemas/AuthEnvelope"
         "400":
           $ref: "#/components/responses/ValidationError"
         "409":
@@ -50,7 +65,7 @@ paths:
   /api/auth/login:
     post:
       tags: [Authentication]
-      summary: Log in with email and password
+      summary: Log in
       requestBody:
         required: true
         content:
@@ -59,11 +74,13 @@ paths:
               $ref: "#/components/schemas/LoginRequest"
       responses:
         "200":
-          description: Login successful
+          description: Logged in
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponse"
+                $ref: "#/components/schemas/AuthEnvelope"
+        "400":
+          $ref: "#/components/responses/ValidationError"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
   /api/auth/refresh:
@@ -78,55 +95,50 @@ paths:
               $ref: "#/components/schemas/RefreshRequest"
       responses:
         "200":
-          description: Session refreshed
+          description: Refreshed
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponse"
+                $ref: "#/components/schemas/AuthEnvelope"
+        "400":
+          $ref: "#/components/responses/ValidationError"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
   /api/auth/logout:
     post:
       tags: [Authentication]
-      summary: Revoke a refresh session
-      security:
-        - bearerAuth: []
+      summary: Revoke a refresh token
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LogoutRequest"
+              $ref: "#/components/schemas/RefreshRequest"
       responses:
         "204":
-          description: Logout successful
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-  /api/links:
+          description: Logged out
+        "400":
+          $ref: "#/components/responses/ValidationError"
+  /api/profile:
     get:
-      tags: [Links]
-      summary: List owned links
+      tags: [Profile]
+      summary: Get current profile
       security:
         - bearerAuth: []
-      parameters:
-        - $ref: "#/components/parameters/Search"
-        - $ref: "#/components/parameters/Status"
-        - $ref: "#/components/parameters/Sort"
-        - $ref: "#/components/parameters/Page"
-        - $ref: "#/components/parameters/PageSize"
       responses:
         "200":
-          description: Paginated links
+          description: Profile
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LinkListResponse"
+                $ref: "#/components/schemas/ProfileEnvelope"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
+  /api/links:
     post:
       tags: [Links]
       summary: Create a short link
-      description: Authentication is optional. Authenticated users own the created link.
+      description: Authentication is optional; authenticated users own created links.
       security:
         - bearerAuth: []
         - {}
@@ -142,13 +154,56 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LinkResponse"
+                $ref: "#/components/schemas/LinkEnvelope"
         "400":
           $ref: "#/components/responses/ValidationError"
         "409":
           $ref: "#/components/responses/ConflictError"
-        "429":
-          $ref: "#/components/responses/RateLimitError"
+    get:
+      tags: [Links]
+      summary: List owned links
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Status"
+        - $ref: "#/components/parameters/Sort"
+        - $ref: "#/components/parameters/Direction"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Owned links
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LinkListEnvelope"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /api/shorten:
+    post:
+      tags: [Links]
+      summary: Compatibility alias for creating a short link
+      security:
+        - bearerAuth: []
+        - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLinkRequest"
+      responses:
+        "201":
+          description: Link created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LinkEnvelope"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
   /api/links/{shortCode}:
     get:
       tags: [Links]
@@ -161,7 +216,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LinkResponse"
+                $ref: "#/components/schemas/LinkEnvelope"
         "404":
           $ref: "#/components/responses/NotFoundError"
     patch:
@@ -183,20 +238,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LinkResponse"
+                $ref: "#/components/schemas/LinkEnvelope"
         "400":
           $ref: "#/components/responses/ValidationError"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
-        "403":
-          $ref: "#/components/responses/ForbiddenError"
         "404":
           $ref: "#/components/responses/NotFoundError"
         "409":
           $ref: "#/components/responses/ConflictError"
     delete:
       tags: [Links]
-      summary: Delete an owned link
+      summary: Soft-delete an owned link
       security:
         - bearerAuth: []
       parameters:
@@ -206,8 +259,25 @@ paths:
           description: Link deleted
         "401":
           $ref: "#/components/responses/UnauthorizedError"
-        "403":
-          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /api/links/{shortCode}/qr:
+    get:
+      tags: [Links]
+      summary: Generate QR code data URL for an owned link
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ShortCode"
+      responses:
+        "200":
+          description: QR code payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QrEnvelope"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
         "404":
           $ref: "#/components/responses/NotFoundError"
   /api/links/{shortCode}/analytics:
@@ -218,91 +288,30 @@ paths:
         - bearerAuth: []
       parameters:
         - $ref: "#/components/parameters/ShortCode"
-        - $ref: "#/components/parameters/FromDate"
-        - $ref: "#/components/parameters/ToDate"
+        - $ref: "#/components/parameters/StartDate"
+        - $ref: "#/components/parameters/EndDate"
       responses:
         "200":
           description: Link analytics
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AnalyticsResponse"
+                $ref: "#/components/schemas/AnalyticsEnvelope"
+        "400":
+          $ref: "#/components/responses/ValidationError"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
-        "403":
-          $ref: "#/components/responses/ForbiddenError"
         "404":
           $ref: "#/components/responses/NotFoundError"
-  /api/links/{shortCode}/qr:
-    get:
-      tags: [Links]
-      summary: Generate a QR code for an owned link
-      security:
-        - bearerAuth: []
-      parameters:
-        - $ref: "#/components/parameters/ShortCode"
-        - name: format
-          in: query
-          schema:
-            type: string
-            enum: [png, svg]
-            default: png
-      responses:
-        "200":
-          description: QR code generated
-          content:
-            image/png:
-              schema:
-                type: string
-                format: binary
-            image/svg+xml:
-              schema:
-                type: string
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-        "403":
-          $ref: "#/components/responses/ForbiddenError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-  /api/dashboard/stats:
-    get:
-      tags: [Dashboard]
-      summary: Get authenticated dashboard summary
-      security:
-        - bearerAuth: []
-      responses:
-        "200":
-          description: Dashboard summary
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DashboardStatsResponse"
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-  /api/profile:
-    get:
-      tags: [Profile]
-      summary: Get current user profile
-      security:
-        - bearerAuth: []
-      responses:
-        "200":
-          description: Current user profile
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProfileResponse"
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
   /{shortCode}:
     get:
       tags: [Redirects]
-      summary: Redirect a short code to its destination
+      summary: Redirect to the original URL
       parameters:
         - $ref: "#/components/parameters/ShortCode"
       responses:
         "302":
-          description: Redirect to original URL
+          description: Redirect
           headers:
             Location:
               schema:
@@ -311,13 +320,11 @@ paths:
         "404":
           $ref: "#/components/responses/NotFoundError"
         "410":
-          description: Link expired, deleted, or unavailable
+          description: Link expired, disabled, or unavailable
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "429":
-          $ref: "#/components/responses/RateLimitError"
+                $ref: "#/components/schemas/ErrorEnvelope"
 components:
   securitySchemes:
     bearerAuth:
@@ -339,20 +346,24 @@ components:
       in: query
       schema:
         type: string
-        maxLength: 200
     Status:
       name: status
       in: query
       schema:
         type: string
-        enum: [active, disabled, deleted, expired]
+        enum: [active, disabled, deleted]
     Sort:
       name: sort
       in: query
       schema:
         type: string
-        enum: [createdAt, clicks, expiresAt]
-        default: createdAt
+        enum: [createdAt, clickCount, expiresAt]
+    Direction:
+      name: direction
+      in: query
+      schema:
+        type: string
+        enum: [asc, desc]
     Page:
       name: page
       in: query
@@ -368,14 +379,14 @@ components:
         minimum: 1
         maximum: 100
         default: 20
-    FromDate:
-      name: from
+    StartDate:
+      name: start
       in: query
       schema:
         type: string
         format: date-time
-    ToDate:
-      name: to
+    EndDate:
+      name: end
       in: query
       schema:
         type: string
@@ -386,94 +397,69 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorResponse"
+            $ref: "#/components/schemas/ErrorEnvelope"
     UnauthorizedError:
       description: Authentication required or invalid
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorResponse"
-    ForbiddenError:
-      description: Authenticated user cannot access this resource
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
+            $ref: "#/components/schemas/ErrorEnvelope"
     NotFoundError:
       description: Resource not found
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorResponse"
+            $ref: "#/components/schemas/ErrorEnvelope"
     ConflictError:
-      description: Resource conflict
+      description: Conflict
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ErrorResponse"
-    RateLimitError:
-      description: Too many requests
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
+            $ref: "#/components/schemas/ErrorEnvelope"
   schemas:
-    StandardMeta:
-      type: object
-      properties:
-        requestId:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-    ErrorResponse:
-      type: object
-      required: [success, error]
-      properties:
-        success:
-          type: boolean
-          const: false
-        error:
-          type: object
-          required: [code, message]
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: object
-              additionalProperties: true
-        meta:
-          $ref: "#/components/schemas/StandardMeta"
     HealthResponse:
       type: object
-      required: [success, data]
+      required: [status]
       properties:
-        success:
-          type: boolean
-          const: true
-        data:
+        status:
+          type: string
+          enum: [ok]
+    ReadinessResponse:
+      type: object
+      required: [status, checks]
+      properties:
+        status:
+          type: string
+          enum: [ready, degraded]
+        checks:
           type: object
-          required: [status]
+          required: [postgres, redis]
           properties:
-            status:
+            postgres:
               type: string
-              enum: [ok]
-            database:
+              enum: [ok, down]
+            redis:
               type: string
-              enum: [ok, degraded]
-            cache:
+              enum: [ok, down]
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [message]
+          properties:
+            message:
               type: string
-              enum: [ok, degraded]
+            details: {}
     RegisterRequest:
       type: object
       required: [name, email, password]
       properties:
         name:
           type: string
-          minLength: 1
-          maxLength: 100
+          minLength: 2
+          maxLength: 80
         email:
           type: string
           format: email
@@ -496,29 +482,36 @@ components:
       properties:
         refreshToken:
           type: string
-    LogoutRequest:
+          minLength: 20
+    AuthUser:
       type: object
+      required: [sub, email, name]
       properties:
-        refreshToken:
+        sub:
           type: string
-    AuthResponse:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+    AuthEnvelope:
       type: object
-      required: [success, data]
+      required: [data]
       properties:
-        success:
-          type: boolean
-          const: true
         data:
           type: object
-          required: [user, accessToken, refreshToken]
+          required: [user, accessToken, refreshToken, expiresAt]
           properties:
             user:
-              $ref: "#/components/schemas/UserPublic"
+              $ref: "#/components/schemas/AuthUser"
             accessToken:
               type: string
             refreshToken:
               type: string
-    UserPublic:
+            expiresAt:
+              type: string
+              format: date-time
+    Profile:
       type: object
       required: [id, name, email, createdAt]
       properties:
@@ -532,6 +525,12 @@ components:
         createdAt:
           type: string
           format: date-time
+    ProfileEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: "#/components/schemas/Profile"
     CreateLinkRequest:
       type: object
       required: [originalUrl]
@@ -542,7 +541,7 @@ components:
         customAlias:
           type: string
           minLength: 3
-          maxLength: 64
+          maxLength: 32
           pattern: "^[A-Za-z0-9_-]+$"
         expiresAt:
           type: string
@@ -554,19 +553,22 @@ components:
           type: string
           format: uri
         customAlias:
-          type: string
+          type:
+            - string
+            - "null"
           minLength: 3
-          maxLength: 64
-          pattern: "^[A-Za-z0-9_-]+$"
-        expiresAt:
+          maxLength: 32
+        status:
           type: string
+          enum: [active, disabled]
+        expiresAt:
+          type:
+            - string
+            - "null"
           format: date-time
-          nullable: true
-        enabled:
-          type: boolean
     Link:
       type: object
-      required: [id, originalUrl, shortCode, shortUrl, status, clicks, createdAt]
+      required: [id, originalUrl, shortCode, status, shortUrl, clickCount, createdAt, updatedAt]
       properties:
         id:
           type: string
@@ -576,139 +578,115 @@ components:
         shortCode:
           type: string
         customAlias:
+          type:
+            - string
+            - "null"
+        status:
           type: string
-          nullable: true
+          enum: [active, disabled, deleted]
         shortUrl:
           type: string
           format: uri
-        status:
-          type: string
-          enum: [active, disabled, deleted, expired]
-        clicks:
+        clickCount:
           type: integer
           minimum: 0
         expiresAt:
-          type: string
+          type:
+            - string
+            - "null"
           format: date-time
-          nullable: true
         createdAt:
           type: string
           format: date-time
         updatedAt:
           type: string
           format: date-time
-    LinkResponse:
+    LinkEnvelope:
       type: object
-      required: [success, data]
+      required: [data]
       properties:
-        success:
-          type: boolean
-          const: true
         data:
           $ref: "#/components/schemas/Link"
-    LinkListResponse:
+    LinkListEnvelope:
       type: object
-      required: [success, data]
+      required: [data]
       properties:
-        success:
-          type: boolean
-          const: true
         data:
           type: object
-          required: [items, pagination]
+          required: [items, page, pageSize, total]
           properties:
             items:
               type: array
               items:
                 $ref: "#/components/schemas/Link"
-            pagination:
-              $ref: "#/components/schemas/Pagination"
-    Pagination:
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            total:
+              type: integer
+    QrEnvelope:
       type: object
-      required: [page, pageSize, total, totalPages]
+      required: [data]
       properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        total:
-          type: integer
-        totalPages:
-          type: integer
-    AnalyticsResponse:
-      type: object
-      required: [success, data]
-      properties:
-        success:
-          type: boolean
-          const: true
         data:
           type: object
-          required: [totalClicks, uniqueVisitors, dailyClicks, browsers, operatingSystems, devices, referrers, countries]
+          required: [shortUrl, dataUrl]
           properties:
+            shortUrl:
+              type: string
+              format: uri
+            dataUrl:
+              type: string
+    AnalyticsEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          required: [link, totalClicks, uniqueVisitors, daily, browsers, operatingSystems, devices, referrers, countries, events]
+          properties:
+            link:
+              type: object
+              required: [shortCode, originalUrl, clickCount]
+              properties:
+                shortCode:
+                  type: string
+                originalUrl:
+                  type: string
+                  format: uri
+                clickCount:
+                  type: integer
             totalClicks:
               type: integer
             uniqueVisitors:
               type: integer
-            dailyClicks:
-              type: array
-              items:
-                $ref: "#/components/schemas/MetricPoint"
+            daily:
+              type: object
+              additionalProperties:
+                type: integer
             browsers:
-              type: array
-              items:
-                $ref: "#/components/schemas/MetricPoint"
+              type: object
+              additionalProperties:
+                type: integer
             operatingSystems:
-              type: array
-              items:
-                $ref: "#/components/schemas/MetricPoint"
+              type: object
+              additionalProperties:
+                type: integer
             devices:
-              type: array
-              items:
-                $ref: "#/components/schemas/MetricPoint"
+              type: object
+              additionalProperties:
+                type: integer
             referrers:
-              type: array
-              items:
-                $ref: "#/components/schemas/MetricPoint"
+              type: object
+              additionalProperties:
+                type: integer
             countries:
+              type: object
+              additionalProperties:
+                type: integer
+            events:
               type: array
               items:
-                $ref: "#/components/schemas/MetricPoint"
-    MetricPoint:
-      type: object
-      required: [label, value]
-      properties:
-        label:
-          type: string
-        value:
-          type: integer
-    DashboardStatsResponse:
-      type: object
-      required: [success, data]
-      properties:
-        success:
-          type: boolean
-          const: true
-        data:
-          type: object
-          required: [totalLinks, activeLinks, totalClicks, topLinks]
-          properties:
-            totalLinks:
-              type: integer
-            activeLinks:
-              type: integer
-            totalClicks:
-              type: integer
-            topLinks:
-              type: array
-              items:
-                $ref: "#/components/schemas/Link"
-    ProfileResponse:
-      type: object
-      required: [success, data]
-      properties:
-        success:
-          type: boolean
-          const: true
-        data:
-          $ref: "#/components/schemas/UserPublic"
+                type: object
+                additionalProperties: true

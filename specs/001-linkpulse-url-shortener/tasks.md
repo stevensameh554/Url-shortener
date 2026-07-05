@@ -18,20 +18,20 @@
 
 **Purpose**: Upgrade the existing scaffold into a strict TypeScript monorepo with repeatable local commands.
 
-- [ ] T001 Update root workspace scripts and dev dependencies in package.json
-- [ ] T002 [P] Add root TypeScript shared settings in tsconfig.base.json
-- [ ] T003 [P] Add root ESLint configuration in eslint.config.js
-- [ ] T004 [P] Add root Prettier configuration in .prettierrc
-- [ ] T005 Update API package scripts, runtime dependencies, and TypeScript dev dependencies in apps/api/package.json
-- [ ] T006 Update web package scripts, runtime dependencies, and TypeScript dev dependencies in apps/web/package.json
-- [ ] T007 [P] Add API TypeScript config in apps/api/tsconfig.json
-- [ ] T008 [P] Add web TypeScript config in apps/web/tsconfig.json
-- [ ] T009 Rename API entry files from apps/api/src/app.js and apps/api/src/server.js to apps/api/src/app.ts and apps/api/src/server.ts
-- [ ] T010 Rename web entry files from apps/web/src/main.jsx and apps/web/src/api.js to apps/web/src/main.tsx and apps/web/src/lib/api.ts
-- [ ] T011 Update Docker build commands for TypeScript output in apps/api/Dockerfile
-- [ ] T012 Update Docker build commands for Vite TypeScript output in apps/web/Dockerfile
-- [ ] T013 Update docker-compose.yml service environment, health checks, and dependency ordering for postgres, redis, api, and web
-- [ ] T014 Update .env.example with all API, web, database, Redis, JWT, CORS, rate-limit, and deployment variables
+- [X] T001 Update root workspace scripts and dev dependencies in package.json
+- [X] T002 [P] Add root TypeScript shared settings in tsconfig.base.json
+- [X] T003 [P] Add root ESLint configuration in eslint.config.js
+- [X] T004 [P] Add root Prettier configuration in .prettierrc
+- [X] T005 Update API package scripts, runtime dependencies, and TypeScript dev dependencies in apps/api/package.json
+- [X] T006 Update web package scripts, runtime dependencies, and TypeScript dev dependencies in apps/web/package.json
+- [X] T007 [P] Add API TypeScript config in apps/api/tsconfig.json
+- [X] T008 [P] Add web TypeScript config in apps/web/tsconfig.json
+- [X] T009 Rename API entry files from apps/api/src/app.js and apps/api/src/server.js to apps/api/src/app.ts and apps/api/src/server.ts
+- [X] T010 Rename web entry files from apps/web/src/main.jsx and apps/web/src/api.js to apps/web/src/main.tsx and apps/web/src/lib/api.ts
+- [X] T011 Update Docker build commands for TypeScript output in apps/api/Dockerfile
+- [X] T012 Update Docker build commands for Vite TypeScript output in apps/web/Dockerfile
+- [X] T013 Update docker-compose.yml service environment, health checks, and dependency ordering for postgres, redis, api, and web
+- [X] T014 Update .env.example with all API, web, database, Redis, JWT, CORS, rate-limit, and deployment variables
 
 ---
 
@@ -41,29 +41,29 @@
 
 **CRITICAL**: No user story work should begin until this phase is complete.
 
-- [ ] T015 Extend Prisma schema for User, Link, ClickEvent, RefreshSession, status fields, timestamps, and indexes in prisma/schema.prisma
-- [ ] T016 Generate initial Prisma migration for the planned data model in prisma/migrations/
-- [ ] T017 Create typed environment loader and validation schema in apps/api/src/config/env.ts
-- [ ] T018 [P] Create shared API response helpers in apps/api/src/utils/responses.ts
-- [ ] T019 [P] Create typed HTTP error classes in apps/api/src/utils/http-error.ts
-- [ ] T020 [P] Create async route wrapper in apps/api/src/utils/async-handler.ts
-- [ ] T021 [P] Create request typing extensions in apps/api/src/types/express.d.ts
-- [ ] T022 Create Prisma client module in apps/api/src/db/prisma.ts
-- [ ] T023 Create Redis client and cache helpers in apps/api/src/db/redis.ts
-- [ ] T024 Create application logger in apps/api/src/utils/logger.ts
-- [ ] T025 Create global error middleware in apps/api/src/middleware/error.ts
-- [ ] T026 Create request validation middleware using Zod in apps/api/src/middleware/validate.ts
-- [ ] T027 Create request ID and structured logging middleware in apps/api/src/middleware/request-context.ts
-- [ ] T028 Create security middleware setup for Helmet, CORS, body limits, and rate limits in apps/api/src/middleware/security.ts
-- [ ] T029 Create API router composition in apps/api/src/routes/index.ts
-- [ ] T030 Create health controller and route in apps/api/src/controllers/health.controller.ts and apps/api/src/routes/health.routes.ts
-- [ ] T031 [P] Create backend unit test setup in apps/api/test/setup.ts
-- [ ] T032 [P] Create backend integration test database helpers in apps/api/test/helpers/database.ts
-- [ ] T033 [P] Create backend API test app helper in apps/api/test/helpers/test-app.ts
-- [ ] T034 Create frontend app shell, routing entry, and layout baseline in apps/web/src/App.tsx
-- [ ] T035 [P] Create frontend API client and auth token plumbing in apps/web/src/lib/api.ts
-- [ ] T036 [P] Create frontend shared types from API contract in apps/web/src/types/api.ts
-- [ ] T037 [P] Create frontend global styles and responsive layout tokens in apps/web/src/styles/global.css
+- [X] T015 Extend Prisma schema for User, Link, ClickEvent, RefreshSession, status fields, timestamps, and indexes in prisma/schema.prisma
+- [X] T016 Generate initial Prisma migration for the planned data model in prisma/migrations/
+- [X] T017 Create typed environment loader and validation schema in apps/api/src/config/env.ts
+- [X] T018 [P] Create shared API response helpers in apps/api/src/utils/responses.ts
+- [X] T019 [P] Create typed HTTP error classes in apps/api/src/utils/http-error.ts
+- [X] T020 [P] Create async route wrapper in apps/api/src/utils/async-handler.ts
+- [X] T021 [P] Create request typing extensions in apps/api/src/types/express.d.ts
+- [X] T022 Create Prisma client module in apps/api/src/db/prisma.ts
+- [X] T023 Create Redis client and cache helpers in apps/api/src/db/redis.ts
+- [X] T024 Create application logger in apps/api/src/utils/logger.ts
+- [X] T025 Create global error middleware in apps/api/src/middleware/error.ts
+- [X] T026 Create request validation middleware using Zod in apps/api/src/middleware/validate.ts
+- [X] T027 Create request ID and structured logging middleware in apps/api/src/middleware/request-context.ts
+- [X] T028 Create security middleware setup for Helmet, CORS, body limits, and rate limits in apps/api/src/middleware/security.ts
+- [X] T029 Create API router composition in apps/api/src/routes/index.ts
+- [X] T030 Create health controller and route in apps/api/src/controllers/health.controller.ts and apps/api/src/routes/health.routes.ts
+- [X] T031 [P] Create backend unit test setup in apps/api/test/setup.ts
+- [X] T032 [P] Create backend integration test database helpers in apps/api/test/helpers/database.ts
+- [X] T033 [P] Create backend API test app helper in apps/api/test/helpers/test-app.ts
+- [X] T034 Create frontend app shell, routing entry, and layout baseline in apps/web/src/App.tsx
+- [X] T035 [P] Create frontend API client and auth token plumbing in apps/web/src/lib/api.ts
+- [X] T036 [P] Create frontend shared types from API contract in apps/web/src/types/api.ts
+- [X] T037 [P] Create frontend global styles and responsive layout tokens in apps/web/src/styles/global.css
 
 **Checkpoint**: Foundation ready. User story implementation can now proceed.
 
@@ -77,25 +77,25 @@
 
 ### Tests for User Story 1
 
-- [ ] T038 [P] [US1] Add URL validation unit tests in apps/api/test/unit/url-validator.test.ts
-- [ ] T039 [P] [US1] Add short-code generation unit tests in apps/api/test/unit/short-code.test.ts
-- [ ] T040 [P] [US1] Add create-link API tests for generated codes, aliases, expiration, conflicts, and invalid URLs in apps/api/test/api/links-create.test.ts
-- [ ] T041 [P] [US1] Add frontend link creation smoke tests in apps/web/src/features/links/CreateLinkForm.test.tsx
+- [X] T038 [P] [US1] Add URL validation unit tests in apps/api/test/unit/url-validator.test.ts
+- [X] T039 [P] [US1] Add short-code generation unit tests in apps/api/test/unit/short-code.test.ts
+- [X] T040 [P] [US1] Add create-link API tests for generated codes, aliases, expiration, conflicts, and invalid URLs in apps/api/test/api/links-create.test.ts
+- [X] T041 [P] [US1] Add frontend link creation smoke tests in apps/web/src/features/links/CreateLinkForm.test.tsx
 
 ### Implementation for User Story 1
 
-- [ ] T042 [P] [US1] Implement public URL safety validator in apps/api/src/utils/url-validator.ts
-- [ ] T043 [P] [US1] Implement short-code generator in apps/api/src/utils/short-code.ts
-- [ ] T044 [US1] Implement Link repository create and uniqueness methods in apps/api/src/repositories/link.repository.ts
-- [ ] T045 [US1] Implement Link creation service with alias, expiration, ownership, and conflict rules in apps/api/src/services/link.service.ts
-- [ ] T046 [US1] Implement create-link schemas in apps/api/src/validators/link.validators.ts
-- [ ] T047 [US1] Implement link controller create and public detail actions in apps/api/src/controllers/link.controller.ts
-- [ ] T048 [US1] Implement link routes for POST /api/links and GET /api/links/:shortCode in apps/api/src/routes/link.routes.ts
-- [ ] T049 [US1] Wire link routes into API router in apps/api/src/routes/index.ts
-- [ ] T050 [US1] Create landing page with URL shortening form in apps/web/src/pages/LandingPage.tsx
-- [ ] T051 [US1] Create reusable link creation form in apps/web/src/features/links/CreateLinkForm.tsx
-- [ ] T052 [US1] Create short-link result and copy interaction in apps/web/src/features/links/ShortLinkResult.tsx
-- [ ] T053 [US1] Add link creation API functions in apps/web/src/features/links/linkApi.ts
+- [X] T042 [P] [US1] Implement public URL safety validator in apps/api/src/utils/url-validator.ts
+- [X] T043 [P] [US1] Implement short-code generator in apps/api/src/utils/short-code.ts
+- [X] T044 [US1] Implement Link repository create and uniqueness methods in apps/api/src/repositories/link.repository.ts
+- [X] T045 [US1] Implement Link creation service with alias, expiration, ownership, and conflict rules in apps/api/src/services/link.service.ts
+- [X] T046 [US1] Implement create-link schemas in apps/api/src/validators/link.validators.ts
+- [X] T047 [US1] Implement link controller create and public detail actions in apps/api/src/controllers/link.controller.ts
+- [X] T048 [US1] Implement link routes for POST /api/links and GET /api/links/:shortCode in apps/api/src/routes/link.routes.ts
+- [X] T049 [US1] Wire link routes into API router in apps/api/src/routes/index.ts
+- [X] T050 [US1] Create landing page with URL shortening form in apps/web/src/pages/LandingPage.tsx
+- [X] T051 [US1] Create reusable link creation form in apps/web/src/features/links/CreateLinkForm.tsx
+- [X] T052 [US1] Create short-link result and copy interaction in apps/web/src/features/links/ShortLinkResult.tsx
+- [X] T053 [US1] Add link creation API functions in apps/web/src/features/links/linkApi.ts
 
 **Checkpoint**: User Story 1 works independently as the MVP.
 
@@ -109,20 +109,20 @@
 
 ### Tests for User Story 2
 
-- [ ] T054 [P] [US2] Add redirect service unit tests for active, expired, disabled, deleted, and missing links in apps/api/test/unit/redirect.service.test.ts
-- [ ] T055 [P] [US2] Add redirect API tests for 302, 404, 410, cache hit, and cache miss behavior in apps/api/test/api/redirect.test.ts
-- [ ] T056 [P] [US2] Add analytics recording resilience test for redirect flow in apps/api/test/integration/redirect-analytics.test.ts
+- [X] T054 [P] [US2] Add redirect service unit tests for active, expired, disabled, deleted, and missing links in apps/api/test/unit/redirect.service.test.ts
+- [X] T055 [P] [US2] Add redirect API tests for 302, 404, 410, cache hit, and cache miss behavior in apps/api/test/api/redirect.test.ts
+- [X] T056 [P] [US2] Add analytics recording resilience test for redirect flow in apps/api/test/integration/redirect-analytics.test.ts
 
 ### Implementation for User Story 2
 
-- [ ] T057 [P] [US2] Implement redirect cache read/write/invalidation helpers in apps/api/src/services/redirect-cache.service.ts
-- [ ] T058 [US2] Implement redirect lookup and availability rules in apps/api/src/services/redirect.service.ts
-- [ ] T059 [US2] Implement click counter increment method in apps/api/src/repositories/link.repository.ts
-- [ ] T060 [US2] Implement non-blocking click event recording entry point in apps/api/src/services/click-event.service.ts
-- [ ] T061 [US2] Implement redirect controller in apps/api/src/controllers/redirect.controller.ts
-- [ ] T062 [US2] Implement public redirect route GET /:shortCode in apps/api/src/routes/redirect.routes.ts
-- [ ] T063 [US2] Wire redirect route before API routes in apps/api/src/app.ts
-- [ ] T064 [US2] Add expired and unavailable link user-facing response page or JSON handling in apps/web/src/pages/LinkUnavailablePage.tsx
+- [X] T057 [P] [US2] Implement redirect cache read/write/invalidation helpers in apps/api/src/services/redirect-cache.service.ts
+- [X] T058 [US2] Implement redirect lookup and availability rules in apps/api/src/services/redirect.service.ts
+- [X] T059 [US2] Implement click counter increment method in apps/api/src/repositories/link.repository.ts
+- [X] T060 [US2] Implement non-blocking click event recording entry point in apps/api/src/services/click-event.service.ts
+- [X] T061 [US2] Implement redirect controller in apps/api/src/controllers/redirect.controller.ts
+- [X] T062 [US2] Implement public redirect route GET /:shortCode in apps/api/src/routes/redirect.routes.ts
+- [X] T063 [US2] Wire redirect route before API routes in apps/api/src/app.ts
+- [X] T064 [US2] Add expired and unavailable link user-facing response page or JSON handling in apps/web/src/pages/LinkUnavailablePage.tsx
 
 **Checkpoint**: User Stories 1 and 2 provide a complete public shortener loop.
 
@@ -136,24 +136,24 @@
 
 ### Tests for User Story 3
 
-- [ ] T065 [P] [US3] Add link ownership and authorization tests in apps/api/test/unit/link-ownership.test.ts
-- [ ] T066 [P] [US3] Add link list, update, delete, and QR API tests in apps/api/test/api/links-management.test.ts
-- [ ] T067 [P] [US3] Add dashboard link table smoke tests in apps/web/src/features/dashboard/LinkTable.test.tsx
+- [X] T065 [P] [US3] Add link ownership and authorization tests in apps/api/test/unit/link-ownership.test.ts
+- [X] T066 [P] [US3] Add link list, update, delete, and QR API tests in apps/api/test/api/links-management.test.ts
+- [X] T067 [P] [US3] Add dashboard link table smoke tests in apps/web/src/features/dashboard/LinkTable.test.tsx
 
 ### Implementation for User Story 3
 
-- [ ] T068 [US3] Extend Link repository with owned list, search, filter, sort, pagination, update, and soft delete methods in apps/api/src/repositories/link.repository.ts
-- [ ] T069 [US3] Extend Link service with ownership checks and management actions in apps/api/src/services/link.service.ts
-- [ ] T070 [US3] Add link management validators in apps/api/src/validators/link.validators.ts
-- [ ] T071 [US3] Add link management controller actions in apps/api/src/controllers/link.controller.ts
-- [ ] T072 [US3] Add GET /api/links, PATCH /api/links/:shortCode, DELETE /api/links/:shortCode, and GET /api/links/:shortCode/qr routes in apps/api/src/routes/link.routes.ts
-- [ ] T073 [P] [US3] Implement QR generation service in apps/api/src/services/qr-code.service.ts
-- [ ] T074 [US3] Create dashboard page shell in apps/web/src/pages/DashboardPage.tsx
-- [ ] T075 [P] [US3] Create dashboard stats and link table components in apps/web/src/features/dashboard/LinkTable.tsx
-- [ ] T076 [P] [US3] Create search, filter, sort, and pagination controls in apps/web/src/features/dashboard/LinkFilters.tsx
-- [ ] T077 [P] [US3] Create edit link dialog in apps/web/src/features/links/EditLinkDialog.tsx
-- [ ] T078 [P] [US3] Create QR code display/download component in apps/web/src/features/links/QRCodePanel.tsx
-- [ ] T079 [US3] Add dashboard and link management API functions in apps/web/src/features/dashboard/dashboardApi.ts
+- [X] T068 [US3] Extend Link repository with owned list, search, filter, sort, pagination, update, and soft delete methods in apps/api/src/repositories/link.repository.ts
+- [X] T069 [US3] Extend Link service with ownership checks and management actions in apps/api/src/services/link.service.ts
+- [X] T070 [US3] Add link management validators in apps/api/src/validators/link.validators.ts
+- [X] T071 [US3] Add link management controller actions in apps/api/src/controllers/link.controller.ts
+- [X] T072 [US3] Add GET /api/links, PATCH /api/links/:shortCode, DELETE /api/links/:shortCode, and GET /api/links/:shortCode/qr routes in apps/api/src/routes/link.routes.ts
+- [X] T073 [P] [US3] Implement QR generation service in apps/api/src/services/qr-code.service.ts
+- [X] T074 [US3] Create dashboard page shell in apps/web/src/pages/DashboardPage.tsx
+- [X] T075 [P] [US3] Create dashboard stats and link table components in apps/web/src/features/dashboard/LinkTable.tsx
+- [X] T076 [P] [US3] Create search, filter, sort, and pagination controls in apps/web/src/features/dashboard/LinkFilters.tsx
+- [X] T077 [P] [US3] Create edit link dialog in apps/web/src/features/links/EditLinkDialog.tsx
+- [X] T078 [P] [US3] Create QR code display/download component in apps/web/src/features/links/QRCodePanel.tsx
+- [X] T079 [US3] Add dashboard and link management API functions in apps/web/src/features/dashboard/dashboardApi.ts
 
 **Checkpoint**: Signed-in users can manage owned links without seeing other users' resources.
 
@@ -167,24 +167,24 @@
 
 ### Tests for User Story 4
 
-- [ ] T080 [P] [US4] Add analytics aggregation unit tests in apps/api/test/unit/analytics.service.test.ts
-- [ ] T081 [P] [US4] Add analytics API tests for ownership, empty state, date ranges, and grouped metrics in apps/api/test/api/analytics.test.ts
-- [ ] T082 [P] [US4] Add analytics page smoke tests in apps/web/src/features/analytics/AnalyticsCharts.test.tsx
+- [X] T080 [P] [US4] Add analytics aggregation unit tests in apps/api/test/unit/analytics.service.test.ts
+- [X] T081 [P] [US4] Add analytics API tests for ownership, empty state, date ranges, and grouped metrics in apps/api/test/api/analytics.test.ts
+- [X] T082 [P] [US4] Add analytics page smoke tests in apps/web/src/features/analytics/AnalyticsCharts.test.tsx
 
 ### Implementation for User Story 4
 
-- [ ] T083 [US4] Implement ClickEvent repository create and aggregate methods in apps/api/src/repositories/click-event.repository.ts
-- [ ] T084 [US4] Implement user-agent, referrer, visitor hash, and country metadata extraction in apps/api/src/services/click-event.service.ts
-- [ ] T085 [US4] Implement analytics aggregation service in apps/api/src/services/analytics.service.ts
-- [ ] T086 [US4] Add analytics validators for short code and date range in apps/api/src/validators/analytics.validators.ts
-- [ ] T087 [US4] Implement analytics controller in apps/api/src/controllers/analytics.controller.ts
-- [ ] T088 [US4] Implement GET /api/links/:shortCode/analytics route in apps/api/src/routes/analytics.routes.ts
-- [ ] T089 [US4] Wire analytics routes into API router in apps/api/src/routes/index.ts
-- [ ] T090 [US4] Create link details page in apps/web/src/pages/LinkDetailsPage.tsx
-- [ ] T091 [P] [US4] Create analytics chart components using Recharts in apps/web/src/features/analytics/AnalyticsCharts.tsx
-- [ ] T092 [P] [US4] Create analytics summary cards and empty states in apps/web/src/features/analytics/AnalyticsSummary.tsx
-- [ ] T093 [P] [US4] Create analytics date range controls in apps/web/src/features/analytics/DateRangePicker.tsx
-- [ ] T094 [US4] Add analytics API functions in apps/web/src/features/analytics/analyticsApi.ts
+- [X] T083 [US4] Implement ClickEvent repository create and aggregate methods in apps/api/src/repositories/click-event.repository.ts
+- [X] T084 [US4] Implement user-agent, referrer, visitor hash, and country metadata extraction in apps/api/src/services/click-event.service.ts
+- [X] T085 [US4] Implement analytics aggregation service in apps/api/src/services/analytics.service.ts
+- [X] T086 [US4] Add analytics validators for short code and date range in apps/api/src/validators/analytics.validators.ts
+- [X] T087 [US4] Implement analytics controller in apps/api/src/controllers/analytics.controller.ts
+- [X] T088 [US4] Implement GET /api/links/:shortCode/analytics route in apps/api/src/routes/analytics.routes.ts
+- [X] T089 [US4] Wire analytics routes into API router in apps/api/src/routes/index.ts
+- [X] T090 [US4] Create link details page in apps/web/src/pages/LinkDetailsPage.tsx
+- [X] T091 [P] [US4] Create analytics chart components using Recharts in apps/web/src/features/analytics/AnalyticsCharts.tsx
+- [X] T092 [P] [US4] Create analytics summary cards and empty states in apps/web/src/features/analytics/AnalyticsSummary.tsx
+- [X] T093 [P] [US4] Create analytics date range controls in apps/web/src/features/analytics/DateRangePicker.tsx
+- [X] T094 [US4] Add analytics API functions in apps/web/src/features/analytics/analyticsApi.ts
 
 **Checkpoint**: Link owners can inspect useful analytics for each owned link.
 
@@ -198,26 +198,26 @@
 
 ### Tests for User Story 5
 
-- [ ] T095 [P] [US5] Add password hashing and token service unit tests in apps/api/test/unit/auth.service.test.ts
-- [ ] T096 [P] [US5] Add register, login, refresh, logout, and profile API tests in apps/api/test/api/auth.test.ts
-- [ ] T097 [P] [US5] Add frontend auth form smoke tests in apps/web/src/features/auth/AuthForms.test.tsx
+- [X] T095 [P] [US5] Add password hashing and token service unit tests in apps/api/test/unit/auth.service.test.ts
+- [X] T096 [P] [US5] Add register, login, refresh, logout, and profile API tests in apps/api/test/api/auth.test.ts
+- [X] T097 [P] [US5] Add frontend auth form smoke tests in apps/web/src/features/auth/AuthForms.test.tsx
 
 ### Implementation for User Story 5
 
-- [ ] T098 [P] [US5] Implement User repository in apps/api/src/repositories/user.repository.ts
-- [ ] T099 [P] [US5] Implement RefreshSession repository in apps/api/src/repositories/refresh-session.repository.ts
-- [ ] T100 [US5] Implement password hashing, access token, refresh token, revocation, and reuse checks in apps/api/src/services/auth.service.ts
-- [ ] T101 [US5] Implement authentication middleware in apps/api/src/middleware/auth.ts
-- [ ] T102 [US5] Implement auth validators in apps/api/src/validators/auth.validators.ts
-- [ ] T103 [US5] Implement auth controller in apps/api/src/controllers/auth.controller.ts
-- [ ] T104 [US5] Implement auth routes for register, login, refresh, and logout in apps/api/src/routes/auth.routes.ts
-- [ ] T105 [US5] Implement profile controller and route in apps/api/src/controllers/profile.controller.ts and apps/api/src/routes/profile.routes.ts
-- [ ] T106 [US5] Wire auth and profile routes into API router in apps/api/src/routes/index.ts
-- [ ] T107 [US5] Create auth context and protected route wrapper in apps/web/src/features/auth/AuthProvider.tsx
-- [ ] T108 [P] [US5] Create login page and form in apps/web/src/pages/LoginPage.tsx
-- [ ] T109 [P] [US5] Create register page and form in apps/web/src/pages/RegisterPage.tsx
-- [ ] T110 [P] [US5] Create account settings page in apps/web/src/pages/AccountSettingsPage.tsx
-- [ ] T111 [US5] Add auth API functions and token persistence in apps/web/src/features/auth/authApi.ts
+- [X] T098 [P] [US5] Implement User repository in apps/api/src/repositories/user.repository.ts
+- [X] T099 [P] [US5] Implement RefreshSession repository in apps/api/src/repositories/refresh-session.repository.ts
+- [X] T100 [US5] Implement password hashing, access token, refresh token, revocation, and reuse checks in apps/api/src/services/auth.service.ts
+- [X] T101 [US5] Implement authentication middleware in apps/api/src/middleware/auth.ts
+- [X] T102 [US5] Implement auth validators in apps/api/src/validators/auth.validators.ts
+- [X] T103 [US5] Implement auth controller in apps/api/src/controllers/auth.controller.ts
+- [X] T104 [US5] Implement auth routes for register, login, refresh, and logout in apps/api/src/routes/auth.routes.ts
+- [X] T105 [US5] Implement profile controller and route in apps/api/src/controllers/profile.controller.ts and apps/api/src/routes/profile.routes.ts
+- [X] T106 [US5] Wire auth and profile routes into API router in apps/api/src/routes/index.ts
+- [X] T107 [US5] Create auth context and protected route wrapper in apps/web/src/features/auth/AuthProvider.tsx
+- [X] T108 [P] [US5] Create login page and form in apps/web/src/pages/LoginPage.tsx
+- [X] T109 [P] [US5] Create register page and form in apps/web/src/pages/RegisterPage.tsx
+- [X] T110 [P] [US5] Create account settings page in apps/web/src/pages/AccountSettingsPage.tsx
+- [X] T111 [US5] Add auth API functions and token persistence in apps/web/src/features/auth/authApi.ts
 
 **Checkpoint**: Authenticated account flows protect private dashboard and analytics resources.
 
@@ -231,22 +231,22 @@
 
 ### Tests for User Story 6
 
-- [ ] T112 [P] [US6] Add Docker Compose smoke test script in scripts/smoke/docker-compose-smoke.ps1
-- [ ] T113 [P] [US6] Add API health and readiness integration tests in apps/api/test/integration/health-readiness.test.ts
-- [ ] T114 [P] [US6] Add CI workflow validation steps in .github/workflows/ci.yml
+- [X] T112 [P] [US6] Add Docker Compose smoke test script in scripts/smoke/docker-compose-smoke.ps1
+- [X] T113 [P] [US6] Add API health and readiness integration tests in apps/api/test/integration/health-readiness.test.ts
+- [X] T114 [P] [US6] Add CI workflow validation steps in .github/workflows/ci.yml
 
 ### Implementation for User Story 6
 
-- [ ] T115 [US6] Add GitHub Actions workflow for install, lint, tests, build, and Docker verification in .github/workflows/ci.yml
-- [ ] T116 [US6] Update README with product overview, screenshots placeholders, setup, commands, testing, Docker, and deployment links in README.md
-- [ ] T117 [P] [US6] Create architecture documentation and diagram source in docs/architecture.md
-- [ ] T118 [P] [US6] Create API documentation from the OpenAPI contract in docs/api.md
-- [ ] T119 [P] [US6] Create database schema documentation in docs/database.md
-- [ ] T120 [P] [US6] Create environment variable guide in docs/environment.md
-- [ ] T121 [P] [US6] Create deployment instructions with live demo URL placeholders in docs/deployment.md
-- [ ] T122 [US6] Update API_DOCUMENTATION.md to reference docs/api.md and specs/001-linkpulse-url-shortener/contracts/openapi.yaml
-- [ ] T123 [US6] Update SYSTEM_DESIGN.md to align with docs/architecture.md and the TypeScript layered architecture
-- [ ] T124 [US6] Add production-ready health/readiness dependency checks in apps/api/src/controllers/health.controller.ts
+- [X] T115 [US6] Add GitHub Actions workflow for install, lint, tests, build, and Docker verification in .github/workflows/ci.yml
+- [X] T116 [US6] Update README with product overview, screenshots placeholders, setup, commands, testing, Docker, and deployment links in README.md
+- [X] T117 [P] [US6] Create architecture documentation and diagram source in docs/architecture.md
+- [X] T118 [P] [US6] Create API documentation from the OpenAPI contract in docs/api.md
+- [X] T119 [P] [US6] Create database schema documentation in docs/database.md
+- [X] T120 [P] [US6] Create environment variable guide in docs/environment.md
+- [X] T121 [P] [US6] Create deployment instructions with live demo URL placeholders in docs/deployment.md
+- [X] T122 [US6] Update API_DOCUMENTATION.md to reference docs/api.md and specs/001-linkpulse-url-shortener/contracts/openapi.yaml
+- [X] T123 [US6] Update SYSTEM_DESIGN.md to align with docs/architecture.md and the TypeScript layered architecture
+- [X] T124 [US6] Add production-ready health/readiness dependency checks in apps/api/src/controllers/health.controller.ts
 
 **Checkpoint**: The repository is understandable and runnable as a portfolio project.
 
@@ -256,17 +256,17 @@
 
 **Purpose**: Final quality, security, performance, and verification work across all stories.
 
-- [ ] T125 [P] Harden URL validation against localhost, private networks, credentials in URLs, and unsafe redirects in apps/api/src/utils/url-validator.ts
-- [ ] T126 [P] Add security regression tests for XSS-like inputs, SQL-injection-like inputs, CSRF-relevant requests, and rate limits in apps/api/test/api/security.test.ts
-- [ ] T127 Improve redirect latency by verifying cache hit path and adding cache invalidation tests in apps/api/test/integration/redirect-cache.test.ts
-- [ ] T128 Add database seed script for demo links and analytics in prisma/seed.ts
-- [ ] T129 Add frontend responsive layout checks and mobile dashboard refinements in apps/web/src/styles/global.css
-- [ ] T130 Add loading, error, and empty states across frontend pages in apps/web/src/components/
-- [ ] T131 Run lint and fix issues across package.json workspaces with npm run lint
-- [ ] T132 Run backend and frontend builds and fix issues with npm run build
-- [ ] T133 Run automated tests and coverage, then close gaps until backend behavior coverage reaches at least 80% with npm run test
-- [ ] T134 Run Docker Compose validation and update quickstart findings in specs/001-linkpulse-url-shortener/quickstart.md
-- [ ] T135 Review OpenAPI contract against implemented routes and update specs/001-linkpulse-url-shortener/contracts/openapi.yaml
+- [X] T125 [P] Harden URL validation against localhost, private networks, credentials in URLs, and unsafe redirects in apps/api/src/utils/url-validator.ts
+- [X] T126 [P] Add security regression tests for XSS-like inputs, SQL-injection-like inputs, CSRF-relevant requests, and rate limits in apps/api/test/api/security.test.ts
+- [X] T127 Improve redirect latency by verifying cache hit path and adding cache invalidation tests in apps/api/test/integration/redirect-cache.test.ts
+- [X] T128 Add database seed script for demo links and analytics in prisma/seed.ts
+- [X] T129 Add frontend responsive layout checks and mobile dashboard refinements in apps/web/src/styles/global.css
+- [X] T130 Add loading, error, and empty states across frontend pages in apps/web/src/components/
+- [X] T131 Run lint and fix issues across package.json workspaces with npm run lint
+- [X] T132 Run backend and frontend builds and fix issues with npm run build
+- [X] T133 Run automated tests and coverage, then close gaps until backend behavior coverage reaches at least 80% with npm run test
+- [X] T134 Run Docker Compose validation and update quickstart findings in specs/001-linkpulse-url-shortener/quickstart.md
+- [X] T135 Review OpenAPI contract against implemented routes and update specs/001-linkpulse-url-shortener/contracts/openapi.yaml
 
 ---
 

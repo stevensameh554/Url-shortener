@@ -7,3 +7,13 @@ coverage
 *.log
 apps/web/dist
 apps/api/dist
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

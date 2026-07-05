@@ -111,6 +111,18 @@ Expected outcome:
 - API health endpoint reports healthy dependencies.
 - Frontend can create, redirect, manage, and analyze links against the containerized API.
 
+Validated on 2026-07-05:
+
+- `docker compose up -d --build` built the API and web images and started PostgreSQL, Redis, API, and web containers.
+- `docker compose ps` reported PostgreSQL, Redis, and API as healthy, with the web container running.
+- `GET http://localhost:4000/api/health` returned `{"status":"ok"}`.
+- `GET http://localhost:4000/api/ready` returned `{"status":"ready","checks":{"postgres":"ok","redis":"ok"}}`.
+- `GET http://localhost:5173` returned HTTP `200`.
+- `POST http://localhost:4000/api/links` created a short link backed by the containerized PostgreSQL database.
+- `GET /{shortCode}` returned HTTP `302` with the original URL in the `Location` header.
+
+Implementation note: the API service runs `npm --workspace apps/api run db:deploy` before `npm --workspace apps/api start`, so migrations are applied during container startup.
+
 ### CI/CD
 
 Push a branch or open a pull request.
