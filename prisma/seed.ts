@@ -19,7 +19,7 @@ async function main() {
     update: {},
     create: {
       userId: user.id,
-      originalUrl: "https://github.com/github/spec-kit",
+      originalUrl: "https://www.wikipedia.org",
       shortCode: "demo",
       customAlias: "demo"
     }

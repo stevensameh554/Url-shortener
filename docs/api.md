@@ -1,6 +1,6 @@
 # API Documentation
 
-The source contract lives at `specs/001-linkpulse-url-shortener/contracts/openapi.yaml`.
+The formal OpenAPI contract lives at [`docs/openapi.yaml`](openapi.yaml).
 
 Core routes:
 

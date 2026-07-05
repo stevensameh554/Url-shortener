@@ -17,3 +17,6 @@ coverage/
 !.env.example
 .DS_Store
 Thumbs.db
+.agents/
+.specify/
+specs/
