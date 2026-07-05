@@ -1,0 +1,24 @@
+{
+  "name": "linkpulse",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LinkPulse - URL shortener with analytics, auth, Redis caching, and a React dashboard.",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:api dev:web",
+    "dev:api": "npm --workspace apps/api run dev",
+    "dev:web": "npm --workspace apps/web run dev",
+    "build": "npm --workspace apps/api run build && npm --workspace apps/web run build",
+    "test": "npm --workspace apps/api test",
+    "lint": "npm --workspace apps/api run lint && npm --workspace apps/web run lint",
+    "db:generate": "npm --workspace apps/api run db:generate",
+    "db:migrate": "npm --workspace apps/api run db:migrate",
+    "db:studio": "npm --workspace apps/api run db:studio"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
